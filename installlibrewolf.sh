@@ -75,69 +75,106 @@ librewolf_AppImage_install(){
        librewolf_opensuse_install
     fi
     if [ $(grep -i "Arch Linux" /etc/*release) ]; then
-       echo "checking if yay is installed..."
-       if [ -f /usr/bin/yay ]; then
+    if [ ! -f /usr/bin/yay ] && [ ! -f /usr/bin/paru ]; then
+       X="X"
+    else
+       X=""
+    fi
+    if [ -f /usr/bin/paru ] && [ -f /usr/bin/yay ]; then
 	  while true; do
-            read -p "which 3rd party package manager do you have?
+            read -p "you have both \"yay\" and \"paru\" installed, choose a package manager to install librewolf with: 
 	    1. Yay
 	    2. Paru
-	    3. Neither
 	    " $3rd_party_package_manager
 	     if [ "$3rd_party_package_manager" == "1." || "$3rd_party_package_manager" == "1" ]; then
-		echo "installing librewolf using yay..."
-		yay -S librewolf
-             elif [ "$3rd_party_package_manager" == "2." || "$3rd_party_package_manager" == "2" ]; then
-		  echo "installing librewolf using paru..."
-		  paru -S librewolf
-             elif [ "$3rd_party_package_manager" == "3." || "$3rd_party_package_manager" == "3" ]; then
-		  while true; do
-	            read -p "which 3rd party package manager do you want to install?
-		    1. Yay
-		    2. Paru
-		    " $pick_an_3rd_party_package_manager
-		      if [ "$pick_an_3rd_party_package_manager" == "1." || "$pick_an_3rd_party_package_manager" == "1" ]; then
-			 echo "installing yay..."
-			 echo "checking if git and base-devel is installed..."
-			 if [ $(pacman -q | grep -i "git") ]; then
-		            echo "git is installed, not installing..."
-		         else
-		            echo "git is not installed, installing..."
-			    sudo pacman -S git 
-			 fi
-			 if [ $(pacman -q | grep -i "base-devel") ]; then
-		            echo "base-devel is installed, not installing..."
-			 else
-			    echo "base-devel is not installed, installing..."
-			    sudo pacman -S base-devel
-			 fi
-                         sleep 0.5
-			 clear
-			 echo "cloning yay repository..."
-			 git clone https://aur.archlinux.org/yay.git
-			 sleep 0.5
-			 clear
-			 echo "done cloning yay repository, changing directory to \"yay\""
-			 cd yay
-			 echo "building source from repository, may take a while..."
-			 makepkg -si
-			 sleep 0.5
-			 clear
-			 echo "done installing yay, installing librewolf... (contains yes or no prompts)"
-			 sudo yay -S librewolf
-		     elif [ "$pick_an_3rd_party_package_manager" == "2." || "$pick_an_3rd_party_package_manager" == "2" ]; then                    echo "installing paru..."                                                                                                echo "checking if git and base-devel is installed..."                                                                   if [ $(pacman -q | grep -i "git") ]; then                                                                                  echo "git is installed, not installing..."                                                                           else                                                                                                                       echo "git is not installed, installing..."                                                                              sudo pacman -S git                                                                                                   fi                                                                                                                      if [ $(pacman -q | grep -i "base-devel") ]; then                                                                           echo "base-devel is installed, not installing..."                                                                    else                                                                                                                       echo "base-devel is not installed, installing..."                                                                       sudo pacman -S base-devel                                                                                            fi                                                                                                                      sleep 0.5                                                                                                               clear                                                                                                                   echo "cloning yay repository..."                                                                                        git clone https://aur.archlinux.org/yay.git                                                                             sleep 0.5                                                                                                               clear                                                                                                                   echo "done cloning yay repository, changing directory to \"yay\""                                                       cd yay                                                                                                                  echo "building source from repository, may take a while..."                                                             makepkg -si                                                                                                             sleep 0.5                                                                                                               clear                                                                                                                   echo "done installing yay, installing librewolf... (contains yes or no prompts)"   
-		     else 
-			 echo "invalid option, try again..."
-	             fi
-		 done
-	  echo "yay is installed, installing librewolf..."
-	        yay -S librewolf
-       elif
-	  read -p "yay is not installed, do you have paru?" $paru
-	    if [ "$paru" == "yes" || "$paru" == "y" ]; then
-	       echo "installing librewolf via paru..."
-	       paru -S librewolf
-            elif   
-
+	        echo "installing librewolf using yay..."
+		    yay -S librewolf 
+         elif [ "$3rd_party_package_manager" == "2." || "$3rd_party_package_manager" == "2" ]; then
+            echo "installing librewolf using paru..."
+            paru -S librewolf
+         else 
+         echo "
+         [$X] = You don't either \"Yay\" or \"Paru\"
+         "
+         while true; do
+           read -p "pick an package manager to install:
+           1. Yay
+           2. Paru
+           3. Abort Script
+           " $pick_an_3rd_party_package_manager
+           if [ "$pick_an_3rd_party_package_manager" == "1." || "$pick_an_3rd_party_package_manager" == "1" ]; then
+              echo "installing Yay..."
+              echo "checking if \"git\" and \"base-devel\" is installed..."
+                if [ $(pacman -q | grep -i "git" ]; then
+                   echo "git is installed, not installing..."
+                else
+                   echo "git is not installed, installing..."
+                   sudo pacman -S git -y
+                   sleep 0.5
+                   clear
+                   echo "done installing git."
+                fi
+                if [ $(pacman -q | grep -i "base-devel") ]; then
+                   echo "base-devel installed, not installing..."
+                else
+                   echo "base-devel is not installed, installing..."
+                   sudo pacman -S base-devel -y
+                   sleep 0.5
+                   clear
+                   echo "done installing base-devel."
+                   sleep 0.5
+                   clear
+                fi
+                   echo "git cloning \"Yay\" repository..."
+                   git clone https://aur.archlinux.org/yay.git
+                   sleep 0.5
+                   clear
+                   echo "done cloning \"Yay\" repository, changing current directory to \"Yay\"..."
+                   cd yay
+                   echo "compiling from source, may take a while..."
+                   makepkg -Si
+                   sleep 0.5
+                   clear
+                   echo "done compiling from source, installing librewolf ( contains yes or no prompts )"
+                   yay -S librewolf
+           elif [ "$pick_an_3rd_party_package_manager" == "2." || "$pick_an_3rd_party_package_manager" == "2" ]; then
+                echo "installing paru..."
+                echo "checking if \"git\" and \"base-devel\" is installed..."
+                if [ $(pacman -q | grep -i "git") ]; then
+                   echo "git is already installed, not installing..."
+                elif
+                   echo "git is not installed, installing git..."
+                   sudo pacman -S git -y
+                   sleep 0.5
+                   clear
+                   echo "done installing git"
+                fi
+                if [ $(pacman -q | grep -i "base-devel") ]; then
+                   echo "base-devel already installed, not installing..."
+                elif
+                   echo "base-devel is not installed, installing..."
+                   sudo pacman -S base-devel -y
+                   sleep 0.5
+                   clear
+                   echo "done installing base-devel."
+                fi
+                echo "git cloning \"Paru\" repository..."
+                git clone https://aur.archlinux.org/paru.git
+                sleep 0.5
+                clear
+                echo "done git cloning \"Paru\" repository, changing current directory to \"paru\""
+                cd paru
+                echo "compiling from source..."
+                makepkg -Si
+                sleep 0.5
+                clear
+                echo "done compiling from source, installing librewolf (contains yes or no prompts)"
+                paru -S librewolf
+                
+         else
+            echo "invalid option, try again..."
+         fi
+      done
     if [ ! $(grep -i "Fedora" /etc/*release) ] && [ ! $(grep -i "Debian" /etc/*release) ] && [ ! $(grep -i "Gentoo" /etc/*release) ] && [ ! $(grep -i "Gentoo" /etc/*release) ] && [ ! $(grep -i "Arch Linux" /etc/*release) ]; then
        echo "You are using a different linux distro, do you want to install Librewolf by:
        1. Compile from Source
