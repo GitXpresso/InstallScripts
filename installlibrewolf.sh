@@ -1,7 +1,7 @@
 #!/bin/bash
 #functions:
-debian_librewolf_install(){
-sudo extrepo enable librewolf 
+debian_librewolf_install() {
+sudo extrepo enable librewolf
 sudo apt update
 echo "updating to add librewolf repository from extrepo..."
 sudo apt update
@@ -11,23 +11,21 @@ echo "installing librewolf"
 sudo apt install librewolf -y
 sleep 0.5 clear
 }
-librewolf_opensuse_install(){
-echo "installing librewolf using zypper..."       
-echo "importing gpg key..."                                                                                             
-echo "gpg key should look like this: \"662E3CDD6FE329002D0CA5BB40339DD82B12EF16\""                                      
-sudo rpm --import https://rpm.librewolf.net/pubkey.gpg                                                                  
-sudo zypper ar -ef https://rpm.librewolf.net librewolf                                                                  
-sudo zypper ref                                                                                                         
+librewolf_opensuse_install() {
+echo "installing librewolf using zypper..."
+echo "importing gpg key..."
+echo "gpg key should look like this: \"662E3CDD6FE329002D0CA5BB40339DD82B12EF16\""
+sudo rpm --import https://rpm.librewolf.net/pubkey.gpg
+sudo zypper ar -ef https://rpm.librewolf.net librewolf
+sudo zypper ref
 sudo zypper in librewolf
 }
-librewolf_compile_from_source(){
-
+librewolf_compile_from_source() {
 }
-librewolf_flatpak_install(){
+librewolf_flatpak_install() {
 #Contents will be added 8/17/2025
 }
-librewolf_AppImage_install(){
-
+librewolf_AppImage_install() {
 }
 #functions ending line
    if [ -f /usr/bin/librewolf ]; then
@@ -58,7 +56,7 @@ librewolf_AppImage_install(){
                   echo "system is not updated, updating..."
                   sudo apt update
    		  debian_librewolf_install
-               fi		   
+               fi
     fi
     if [ $(grep -i "Fedora" /etc/*release) ]; then
 	 if [ -f /etc/yum.repos.d/librewolf.repo ]; then
@@ -88,17 +86,17 @@ librewolf_AppImage_install(){
     fi
     if [ -f /usr/bin/paru ] && [ -f /usr/bin/yay ]; then
 	  while true; do
-            read -p "you have both \"yay\" and \"paru\" installed, choose a package manager to install librewolf with: 
+            read -p "you have both \"yay\" and \"paru\" installed, choose a package manager to install librewolf with:
 	    1. Yay
 	    2. Paru
 	    " $3rd_party_package_manager
 	     if [ "$3rd_party_package_manager" == "1." || "$3rd_party_package_manager" == "1" ]; then
 	        echo "installing librewolf using yay..."
-		    yay -S librewolf 
+		    yay -S librewolf
          elif [ "$3rd_party_package_manager" == "2." || "$3rd_party_package_manager" == "2" ]; then
             echo "installing librewolf using paru..."
             paru -S librewolf
-         else 
+         else
          echo "
          [$X] = You don't either \"Yay\" or \"Paru\"
          "
@@ -176,7 +174,7 @@ librewolf_AppImage_install(){
                 clear
                 echo "done compiling from source, installing librewolf (contains yes or no prompts)"
                 paru -S librewolf
-                
+
          else
             echo "invalid option, try again..."
 	     else
@@ -198,7 +196,7 @@ librewolf_AppImage_install(){
        elif [ "$pick_an_option" == "2." || "$pick_an_option" == "2" ]; then
           echo "installing via flatpak..."
           librewolf_flatpak_install
-	  
+
        elif [ "$pick_an_option" == "3." || "$pick_an_option" == "3" ]; then
           echo "installing via AppImage..."
           librewolf_Appimage_install
@@ -220,7 +218,7 @@ while true; do
        exit 1
     else
        echo "invalid option, try again..."
-       sleep 0.5 
+       sleep 0.5
        clear
     fi
 done
