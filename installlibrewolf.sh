@@ -1,4 +1,5 @@
 #!/bin/bash
+# Syntax error with the functions
 #functions:
 debian_librewolf_install() {
 sudo extrepo enable librewolf
