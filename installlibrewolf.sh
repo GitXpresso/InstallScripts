@@ -12,13 +12,19 @@ sudo apt install librewolf -y
 sleep 0.5 clear
 }
 librewolf_opensuse_install(){
-echo "installing librewolf using zypper..."                                                                             echo "importing gpg key..."                                                                                             echo "gpg key should look like this: \"662E3CDD6FE329002D0CA5BB40339DD82B12EF16\""                                      sudo rpm --import https://rpm.librewolf.net/pubkey.gpg                                                                  sudo zypper ar -ef https://rpm.librewolf.net librewolf                                                                  sudo zypper ref                                                                                                         sudo zypper in librewolf
+echo "installing librewolf using zypper..."       
+echo "importing gpg key..."                                                                                             
+echo "gpg key should look like this: \"662E3CDD6FE329002D0CA5BB40339DD82B12EF16\""                                      
+sudo rpm --import https://rpm.librewolf.net/pubkey.gpg                                                                  
+sudo zypper ar -ef https://rpm.librewolf.net librewolf                                                                  
+sudo zypper ref                                                                                                         
+sudo zypper in librewolf
 }
 librewolf_compile_from_source(){
 
 }
 librewolf_flatpak_install(){
-
+#Contents will be added 8/17/2025
 }
 librewolf_AppImage_install(){
 
@@ -173,6 +179,9 @@ librewolf_AppImage_install(){
                 
          else
             echo "invalid option, try again..."
+	     else
+	        echo "invalid option, try again..."
+		 fi
          fi
       done
     if [ ! $(grep -i "Fedora" /etc/*release) ] && [ ! $(grep -i "Debian" /etc/*release) ] && [ ! $(grep -i "Gentoo" /etc/*release) ] && [ ! $(grep -i "Gentoo" /etc/*release) ] && [ ! $(grep -i "Arch Linux" /etc/*release) ]; then
