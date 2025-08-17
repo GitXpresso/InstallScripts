@@ -1,0 +1,25 @@
+#this script contains a removed section of the original script    
+     if [ ! -f ~/.bash_history ]; then
+   	       history -w
+     else
+    	       echo ".bash_history exists."
+     fi
+        if [ $(cat ~/.bash_history | grep -i "sudo apt update") ]; then
+           echo "system already updated, not updating."
+           debian_librewolf_install
+           else
+                  echo "system is not updated, updating..."
+                  sudo apt update
+                  echo "extrepo not installed, installing..."
+                  sudo apt install extrepo -y
+                  sleep 0.5
+                  clear
+                  sudo extrepo enable librewolf
+                  sudo apt update
+                  echo "updating to add librewolf repository from extrepo..."
+                  sudo apt update
+                  sleep 0.5
+                  clear
+                  echo "installing librewolf"
+                  sudo apt install librewolf -y
+               fi
