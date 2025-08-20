@@ -308,13 +308,6 @@ librewolf_flatpak_install() {
 }
 
 librewolf_AppImage_install() {
-  echo "How do you want to install librewolf AppImage?
-1. Terminal ( Automatic )
-2. AppImage Launcher GUI ( Non-automatic )
-"
-  while true; do
-    read -p "Pick n option [1-2]: " AppImage_option
-    if [[ "$AppImage_option" == "1" ]]; then
       echo "downloading Librewolf Appimage..."
       $non_root wget -q --show-progress https://gitlab.com/api/v4/projects/24386000/packages/generic/librewolf/141.0.3-1/LibreWolf.x86_64.AppImage
       sleep_and_clear
@@ -322,16 +315,6 @@ librewolf_AppImage_install() {
       $non_root chmod a+x LibreWolf.x86_64.AppImage
       echo "installing librewolf AppImage..."
       $non_root ./LibreWolf.x86_64.AppImage
-      break
-    elif [[ "$AppImage_option" == "2" || "$AppImage_option" == "2." ]]; then
-      echo "nothing here yet..."
-      break
-    else
-      clear
-      echo "invalid input, try again..."
-      sleep_and_clear
-    fi
-  done
 }
 
 # functions ending line
