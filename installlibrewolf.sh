@@ -538,7 +538,7 @@ while true; do
     read -p "do you want to start librewolf? (yes/no/y/n): " yesorno4
     if [[ "$yesorno4" == "yes" || "$yesorno4" == "y" ]]; then
         echo "starting librewolf..."
-        $non_root flatpak run io.gitlab.librewolf-community
+        $non_root librewolf
         break
     elif [[ "$yesorno4" == "no" || "$yesorno4" == "n" ]]; then
         echo "not starting librewolf, exiting..."
