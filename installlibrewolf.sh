@@ -1,5 +1,4 @@
 #!/bin/bash
-# Syntax error with the functions
 # functions:
 nixOS_flatpak_install() {
 # Check if the option is already set
