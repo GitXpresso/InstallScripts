@@ -37,7 +37,7 @@ echo "Pick how you want to install tor browser:
         echo "creating symbolic link..."
         sudo ln -s ~/tor-browser/Browser/start-tor-browser /usr/bin/tor-browser
         echo "Done, creating symbolic link, creating desktop file..."
-        sudo $(curl -fsSL https://bit.ly/TorBrowserDesktopFile) >> /usr/share/applications/tor-browser.desktop
+        sudo curl -fsSL https://bit.ly/TorBrowserDesktopFile -o /usr/share/applications/tor-browser.desktop
         echo "Done, installing tor browser"
   elif [[ "$torbrowser_installation_option" == "2." || "$torbrowser_installation_option" == "2" ]]; then
     echo "Installing Tor using dnf..."
