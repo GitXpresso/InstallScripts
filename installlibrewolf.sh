@@ -357,7 +357,12 @@ if grep -qi "Fedora" /etc/*release; then
         sudo dnf install librewolf -y
     else
         echo "librewolf repo not added, adding librewolf repo..."
-        $non_root curl -fsSL https://repo.librewolf.net/librewolf.repo | pkexec tee /etc/yum.repos.d/librewolf.repo
+        check_if_in_container=$(systemd-detect-virt --container)
+        if [ "$check_if_in_container" == "docker" ]; then
+          $non_root curl -fsSL https://repo.librewolf.net/librewolf.repo | sudo tee /etc/yum.repos.d/librewolf.repo
+        else
+          $non_root curl -fsSL https://repo.librewolf.net/librewolf.repo | pkexec tee /etc/yum.repos.d/librewolf.repo
+        fi
         echo "done adding repo, installing fedora..."
         sudo dnf install librewolf -y
     fi
