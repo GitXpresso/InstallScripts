@@ -1,11 +1,8 @@
 #!/bin/bash
-if grep -qi "Ubuntu" /etc/*release && if grep -qi "Debian" /etc/*release; then
+if grep -qi "Debian" /etc/*release; then
   echo "you are using debian, running script..."
-else
-  exit 1
-fi
-if ! -f /var/lib/apt/list/.deb*$(arch)*; then
-  if $(id -u root) -ne 0; then
+if [ ! -f /var/lib/apt/lists/* ]; then
+  if [ $(id -u root) -ne 0 ]; then
     apt update
   else
     sudo apt update
@@ -28,3 +25,5 @@ echo "installing librewolf..."
 sudo apt install -y librewolf
 clear
 echo "Librewolf is now installed on your system"
+fi
+exit 1
