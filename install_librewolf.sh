@@ -1,5 +1,5 @@
 #!/bin/bash
-if grep -qi "Ubuntu" /etc/*release && if grep -qi "Debian" /etc/*release then
+if grep -qi "Ubuntu" /etc/*release && if grep -qi "Debian" /etc/*release; then
   echo "you are using debian, running script..."
 else
   exit 1
