@@ -1,7 +1,7 @@
 #!/bin/bash
 if grep -qi "Debian" /etc/*release; then
   echo "you are using debian, running script..."
-if ls /var/lib/apt/lists | grep -qw "InRelease"; then
+ if ! ls /var/lib/apt/lists | grep -qi InRelease; then
   if [ $(id -u root) -ne 0 ]; then
     apt update
   else
