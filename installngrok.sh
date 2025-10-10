@@ -12,12 +12,16 @@ if [ ! -f $HOME/.local/bin/ngrok ]; then
   && sudo apt install ngrok -y
   clear
 while true; do
-read -p "Ngrok is now installed, enter your ngrok authtoken key: " $Ngrok_authtoken
+read -p "Ngrok is now installed, enter your ngrok authtoken key: " Ngrok_authtoken
+sudo mv /usr/local/bin/ngrok $HOME/.local/bin/ngrok
 if ! grep "2x_" $Ngrok_authtoken; then
   echo "Invalid token, try again..."
-  read -p "Ngrok is now installed, enter your ngrok authtoken key: " $Ngrok_authtoken
+  read -p "Ngrok is now installed, enter your ngrok authtoken key: " Ngrok_authtoken
 else
   ngrok config add-authtoken $Ngrok_authtoken
+  sudo mv /usr/local/bin/ngrok $HOME/.local/bin/ngrok
+  echo 'export PATH="$HOME/.local/bin/ngrok:$PATH"' >> $HOME/.bashrc
+  break
 fi
 done
 else
